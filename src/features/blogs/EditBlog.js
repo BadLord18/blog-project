@@ -1,50 +1,50 @@
-import {useState} from "react";
-import {useNavigate, useParams} from "react-router-dom"
-import TextFiled from "../../components/TextFiled";
-import Button from "../../components/Button";
-import {useDispatch, useSelector} from "react-redux";
-import {editBlog} from "./blogSlice";
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
+import Button from "../../components/Button"
+import TextField from "../../components/TextFiled"
+import { editBlog } from "./blogSlice"
 
-
-const EditBlog = () => {
-    const params = useParams()
-    const dispatch = useDispatch()
-    const blogs = useSelector(store=>store.blogs)
-    const navigate = useNavigate()
-    const existingBlog = blogs.filter(blog => blog.id === params.id)
-    const {title, text} = existingBlog[0]
+const EditUser = () => {
+    const params = useParams();
+    const dispatch = useDispatch();
+    const blogs = useSelector(store => store.blogs);
+    const navigate = useNavigate();
+    const existingUser = blogs.filter(blog => blog.id === params.id);
+    const { title, text } = existingUser[0];
     const [values, setValues] = useState({
         title,
         text
-    })
+    });
 
-    const handleEditBlog = (e, values) => {
-        setValues({title: '', text: ''})
+    const handleEditBlog = () => {
+        setValues({ title: '', text: '' });
         dispatch(editBlog({
             id: params.id,
-            name: values.title,
+            title: values.title,
             text: values.text
-        }))
-        navigate('/')
+        }));
+        navigate('/');
     }
 
-    return(
+    return (
         <div className="mt-10 max-w-xl mx-auto">
-            <TextFiled
+            <TextField
                 label="Title"
                 value={values.title}
-                onChange={(e) => setValues({...values, title: e.target.value})}
-                inputProps={{type: "title", placeholder: "Name your blog"}}
+                onChange={(e) => setValues({ ...values, title: e.target.value })}
+                inputProps={{ type: 'text', placeholder: 'Name your blog' }}
             />
-            <TextFiled
+            <br />
+            <TextField
                 label="Text"
                 value={values.text}
-                onChange={(e) => setValues({...values, text: e.target.value})}
-                inputProps={{type: "text", placeholder: "What's writing about?"}}
+                onChange={(e) => setValues({ ...values, text: e.target.value })}
+                inputProps={{ type: 'email', placeholder: "What's writing about" }}
             />
             <Button onClick={handleEditBlog}>Edit</Button>
         </div>
     )
 }
 
-export default EditBlog
+export default EditUser
